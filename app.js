@@ -3,22 +3,18 @@ const route = require('koa-route')
 const serve = require('koa-static')
 const app = new Koa()
 
-const PiCamera = require('pi-camera');
-const myCamera = new PiCamera({
-  mode: 'photo',
-  output: `${ __dirname }/shots/test.jpg`,
-  nopreview: true,
-});
+const Raspistill = require('node-raspistill').Raspistill
+const raspistill = new Raspistill()
 
-app.use(serve('shots/'))
+app.use(serve('photos/'))
 
 app.use(route.get('/snap', async function(ctx){
   try {
-    const result = await myCamera.snap()
+    const result = await raspistill.takePhoto()
     ctx.body = {error: undefined, result}
   } catch (error) {
     ctx.body = {error, result: undefined}
   }
-}));
+}))
 
 app.listen(80)
