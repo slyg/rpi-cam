@@ -12,6 +12,6 @@
     "babel-cli": "6.24.1",
     "babel-core": "6.24.1",
     "babel-plugin-transform-async-to-generator": "6.24.1",
-    "node-raspistill": "0.0.12"
+    "raspicam": "0.2.13"
   }
 }
