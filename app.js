@@ -7,12 +7,12 @@ const RaspiCam = require('raspicam')
 
 var camera = new RaspiCam({
 	mode: 'photo',
-	output: '/photos/snap.jpg',
+	output: './photos/snap.jpg',
 	encoding: 'jpg',
 	timeout: 100 
 })
 
-app.use(serve('photos/'))
+app.use(serve(__dirname + '/photos'))
 
 app.use(route.get('/snap', async function(ctx){
   try {
