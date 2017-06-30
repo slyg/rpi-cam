@@ -9,6 +9,7 @@ var camera = new RaspiCam({
 	mode: 'photo',
 	output: './photos/snap.jpg',
 	encoding: 'jpg',
+  rotation: 90,
 	timeout: 100 
 })
 
