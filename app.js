@@ -14,6 +14,21 @@ const camera = new RaspiCam({
 
 app
   .use(serve(__dirname + '/photos'))
+  .use(route.get('/', ctx => {
+    ctx.body = `
+      <html>
+        <head>
+          <title>RPI Cam</title>
+        </head>
+        <body>
+          <ul style="padding: 40px;">
+            <li><a href="/snap">Take a photo</a></li>
+            <li><a href="/snap.jpg">See the photo</a></li>
+          </ul>
+        </body>
+      </html>
+    `
+  }))
   .use(route.get('/snap', async function(ctx){
     try {
       const success = camera.start()
