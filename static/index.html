@@ -1,12 +1,59 @@
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
     <title>RPI Cam</title>
+    <style>
+      #snap {
+        padding: 20px;
+        width: 640px;
+        height: 480px;
+        display: block;
+        margin: 20px auto;
+      }
+      #snap.loading {
+        opacity: 0.5;
+      }
+      .action {
+        padding: 40px 0;
+        background-color: #78134E;
+        color: white;
+        text-decoration: none;
+        display: block;
+        margin: 20px auto;
+        width: 640px;
+        font-family: "Consolas", "Lucida Sans", "Avenir Next";
+        font-size: xx-large;
+      }
+      .action:hover {
+        background-color: #A41A6A;
+      }
+    </style>
   </head>
   <body>
-    <h1>Choose action</h1>
-    <ul style="padding: 40px;">
-      <li><a href="/snap">Take a photo</a></li>
-      <li><a href="/snap.jpg">See the photo</a></li>
-    </ul>
+    <div style="text-align: center;">
+      <img id="snap" src="snap.jpg" />
+      <a class="action" href="#" onClick="window.snap()">Refresh</a>
+    </div>
+    <script type="text/javascript">
+
+      const elm = document.getElementById('snap');
+      const delay = time => new Promise( resolve => { setTimeout(resolve, time) });
+
+      function snap(){
+        fetch('/snap')
+          .then(() => {
+            elm.className = 'loading';
+            return delay(1500);
+          })
+          .then(() => {
+            elm.src = `snap.jpg?random=${new Date().getTime()}`;
+            return delay(1000);
+          })
+          .then(() => {
+            elm.className = '';
+          });
+      }
+
+    </script>
   </body>
 </html>
