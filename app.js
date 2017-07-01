@@ -12,22 +12,6 @@ const camera = new RaspiCam({
   timeout: 100 
 })
 
-const homePageCtrl = ctx => {
-  ctx.body = `
-    <html>
-      <head>
-        <title>RPI Cam</title>
-      </head>
-      <body>
-        <ul style="padding: 40px;">
-          <li><a href="/snap">Take a photo</a></li>
-          <li><a href="/snap.jpg">See the photo</a></li>
-        </ul>
-      </body>
-    </html>
-  `
-}
-
 const snapCtrl = async function(ctx){
   try {
     const success = camera.start()
@@ -45,8 +29,8 @@ camera
   .on('exit', ( timestamp ) => console.log('photo child process has exited at ' + timestamp ) )
 
 app
-  .use(serve('/data/photos'))
-  .use(route.get('/', homePageCtrl))
   .use(route.get('/snap', snapCtrl))
+  .use(serve('/data/photos'))
+  .use(serve(__dirname + '/static'))
   .listen(PORT)
 
