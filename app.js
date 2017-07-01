@@ -6,7 +6,7 @@ const RaspiCam = require('raspicam')
 
 const camera = new RaspiCam({
   mode: 'photo',
-  output: './photos/snap.jpg',
+  output: '/data/photos/snap.jpg',
   encoding: 'jpg',
   rotation: 90,
   timeout: 100 
@@ -45,7 +45,7 @@ camera
   .on('exit', ( timestamp ) => console.log('photo child process has exited at ' + timestamp ) )
 
 app
-  .use(serve(__dirname + '/photos'))
+  .use(serve('/data/photos'))
   .use(route.get('/', homePageCtrl))
   .use(route.get('/snap', snapCtrl))
   .listen(PORT)
